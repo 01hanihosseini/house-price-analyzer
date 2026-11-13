@@ -11,18 +11,16 @@ A command-line tool that reads a housing CSV file and reports the mean, min and 
 - --output to save the result as .csv or .json
 - Clear error messages for missing, empty or invalid files
 
-
-
 ## Installation
 
-git clone <https://github.com/01hanihosseini/house-price-analyzer.git>
+git clone https://github.com/01hanihosseini/house-price-analyzer.git
 cd house-price-analyzer
 python -m venv .venv
 source .venv/bin/activate    # Windows (Git Bash): source .venv/Scripts/activate
 pip install -r requirements.txt
 
-
 ## Usage
+
 Download the dataset (see below) and put melb_data.csv in the data/ folder.
 
 # all numeric columns
@@ -36,18 +34,22 @@ PYTHONPATH=src python -m analyzer.cli data/melb_data.csv --columns Price --group
 
 # save the result
 PYTHONPATH=src python -m analyzer.cli data/melb_data.csv --output result.json
-
 ## Example output
+
 Summary statistics
 ------------------
               mean       min          max
 Price 1,075,684.08 85,000.00 9,000,000.00
-Rooms         2.94      1.00        10.00
+Rooms         2.94      1.00        10.
 
+## Observations
+
+- YearBuilt has a minimum of 1196, which is not plausible for this city.
+- Landsize reaches 433,014 and pulls the mean up; its minimum is 0.
+- Postcode, Lattitude and Longtitude are numeric, but their mean is meaningless. Use --columns to skip them.
 
 ## Running tests
 pytest
-
 
 ## Project structure
 
@@ -56,13 +58,12 @@ src/analyzer/
     stats.py    # numeric columns and summary statistics
     report.py   # print and save results
     cli.py      # command-line interface
-tests/          # pytest 
-
+tests/          # pytest tests
 
 ## Dataset
 
-Melbourne Housing Snapshot, via Kaggle:
+Melbourne Housing Snapshot, derived from Tony Pino's dataset, via Kaggle:
 https://www.kaggle.com/datasets/dansbecker/melbourne-housing-snapshot
 
 Data license: [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/).
-
+The dataset file is not included in this repository.
