@@ -15,7 +15,7 @@ A command-line tool that reads a housing CSV file and reports the mean, min and 
 
 ## Installation
 
-git clone <>
+git clone <https://github.com/01hanihosseini/house-price-analyzer.git>
 cd house-price-analyzer
 python -m venv .venv
 source .venv/bin/activate    # Windows (Git Bash): source .venv/Scripts/activate
