@@ -12,13 +12,14 @@ def build_parser():
     )
     parser.add_argument("path", help="path to the CSV file")
     parser.add_argument("--columns", nargs="+",help="columns to analyze (default: all numeric columns)",)
+    parser.add_argument("--group-by", help="column to group by (e.g Regionname)", )
     return parser
 
 def main(argv=None):
     args = build_parser().parse_args(argv)
     try:
         df = load_data(args.path)
-        summary = summarize(df, args.columns)
+        summary = summarize(df, args.columns, args.group_by)
     except (FileNotFoundError, ValueError) as error:
         print(f"Error: {error}", file=sys.stderr)
         return 1
