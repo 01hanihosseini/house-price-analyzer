@@ -1,16 +1,68 @@
 # House Price Analyzer
 
-A command-line tool that analyzes a housing CSV file and reports the mean, min and max of its numeric columns.
+A command-line tool that reads a housing CSV file and reports the mean, min and max of its numeric columns, optionally grouped by a category and exportable to CSV or JSON.
 
-## Status
-Work in progress.
+## Features
 
-## Dataset
-Melbourne Housing Snapshot (derived from Tony Pino's dataset), via Kaggle:
-https://www.kaggle.com/datasets/dansbecker/melbourne-housing-snapshot
+- Detects numeric columns automatically
+- Mean, min and max per column (missing values are ignored)
+- --columns to analyze only selected columns
+- --group-by to get statistics per category (e.g. per region)
+- --output to save the result as .csv or .json
+- Clear error messages for missing, empty or invalid files
 
-Data license: CC BY-NC-SA 4.0
-https://creativecommons.org/licenses/by-nc-sa/4.0/
+
 
 ## Installation
+
+git clone <>
+cd house-price-analyzer
+python -m venv .venv
+source .venv/bin/activate    # Windows (Git Bash): source .venv/Scripts/activate
 pip install -r requirements.txt
+
+
+## Usage
+Download the dataset (see below) and put melb_data.csv in the data/ folder.
+
+# all numeric columns
+PYTHONPATH=src python -m analyzer.cli data/melb_data.csv
+
+# selected columns
+PYTHONPATH=src python -m analyzer.cli data/melb_data.csv --columns Price Rooms
+
+# grouped by region
+PYTHONPATH=src python -m analyzer.cli data/melb_data.csv --columns Price --group-by Regionname
+
+# save the result
+PYTHONPATH=src python -m analyzer.cli data/melb_data.csv --output result.json
+
+## Example output
+Summary statistics
+------------------
+              mean       min          max
+Price 1,075,684.08 85,000.00 9,000,000.00
+Rooms         2.94      1.00        10.00
+
+
+## Running tests
+pytest
+
+
+## Project structure
+
+src/analyzer/
+    loader.py   # read and validate the CSV
+    stats.py    # numeric columns and summary statistics
+    report.py   # print and save results
+    cli.py      # command-line interface
+tests/          # pytest 
+
+
+## Dataset
+
+Melbourne Housing Snapshot, via Kaggle:
+https://www.kaggle.com/datasets/dansbecker/melbourne-housing-snapshot
+
+Data license: [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/).
+
